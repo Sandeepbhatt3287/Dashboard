@@ -5,6 +5,9 @@ import { prisma } from "~/server/db";
 export const projectRouter = router({
   getAll: protectedProcedure
     .query(async ({ ctx }) => {
+      if (!ctx.session?.user?.id) {
+        throw new Error("Unauthorized");
+      }
       const projects = await prisma.project.findMany({
         where: {
           OR: [
@@ -31,6 +34,9 @@ export const projectRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      if (!ctx.session?.user?.id) {
+        throw new Error("Unauthorized");
+      }
       const project = await prisma.project.create({
         data: {
           name: input.name,

@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { router, publicProcedure, protectedProcedure } from "~/server/trpc";
+import { router, protectedProcedure } from "~/server/trpc";
 import { prisma } from "~/server/db";
 
 export const taskRouter = router({
   getAll: protectedProcedure
     .input(z.object({ projectId: z.string() }).optional())
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const tasks = await prisma.task.findMany({
         where: {
           projectId: input?.projectId,
@@ -36,6 +36,9 @@ export const taskRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      if (!ctx.session?.user?.id) {
+        throw new Error("Unauthorized");
+      }
       const task = await prisma.task.create({
         data: {
           title: input.title,
@@ -71,7 +74,7 @@ export const taskRouter = router({
         tags: z.array(z.string()).optional(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const task = await prisma.task.update({
         where: { id: input.id },
         data: {

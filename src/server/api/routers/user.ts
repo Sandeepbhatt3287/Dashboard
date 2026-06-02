@@ -5,6 +5,9 @@ import { prisma } from "~/server/db";
 export const userRouter = router({
   getCurrentUser: protectedProcedure
     .query(async ({ ctx }) => {
+      if (!ctx.session?.user?.id) {
+        throw new Error("Unauthorized");
+      }
       const user = await prisma.user.findUnique({
         where: { id: ctx.session.user.id },
         include: {
@@ -26,6 +29,9 @@ export const userRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      if (!ctx.session?.user?.id) {
+        throw new Error("Unauthorized");
+      }
       const user = await prisma.user.update({
         where: { id: ctx.session.user.id },
         data: {

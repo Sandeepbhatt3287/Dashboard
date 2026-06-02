@@ -33,7 +33,7 @@ const TasksPage: NextPage = () => {
         description: formData.get("description") as string,
         projectId: projectId || (projects?.[0]?.id ?? ""),
         priority: formData.get("priority") as any,
-        dueDate: formData.get("dueDate") ? new Date(formData.get("dueDate") as string) : undefined,
+        dueDate: formData.get("dueDate") as string | undefined,
       });
       if (e.currentTarget) {
         e.currentTarget.reset();

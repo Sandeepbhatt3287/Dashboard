@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { trpc } from "~/utils/trpc";
@@ -54,9 +55,11 @@ const ProfilePage: NextPage = () => {
               <div className="rounded-lg bg-white p-6 shadow">
                 <div className="text-center">
                   {user?.image && (
-                    <img
+                    <Image
                       src={user.image}
                       alt="Profile"
+                      width={96}
+                      height={96}
                       className="mx-auto h-24 w-24 rounded-full"
                     />
                   )}

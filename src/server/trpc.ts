@@ -4,16 +4,29 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "~/server/auth";
 
 interface CreateContextOptions {
-  req?: NextApiRequest;
-  res?: NextApiResponse;
+  req?: NextApiRequest | undefined;
+  res?: NextApiResponse | undefined;
 }
 
-export async function createTRPCContext(opts: CreateContextOptions) {
-  const session = await getServerSession(opts.req, opts.res, authOptions);
+export async function createTRPCContext(opts?: CreateContextOptions) {
+  let session = null;
+  
+  // Only fetch session server-side, not client-side
+  if (typeof window === "undefined" && opts?.req && opts?.res) {
+    try {
+      const result = await (getServerSession as any)(opts.req, opts.res, authOptions);
+      if (result) {
+        session = result;
+      }
+    } catch (error) {
+      // Silently fail - session not available
+    }
+  }
+
   return {
     session,
-    req: opts.req,
-    res: opts.res,
+    req: opts?.req,
+    res: opts?.res,
   };
 }
 
