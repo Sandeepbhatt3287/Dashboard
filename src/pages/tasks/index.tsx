@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -56,6 +57,9 @@ const TasksPage: NextPage = () => {
       </Head>
       <div className="min-h-screen bg-gray-100">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <Link href="/dashboard" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
+            ← Back to Dashboard
+          </Link>
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Tasks</h1>
             <p className="mt-2 text-gray-600">Manage your project tasks</p>
