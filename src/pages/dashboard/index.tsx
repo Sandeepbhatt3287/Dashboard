@@ -36,7 +36,9 @@ const DashboardPage: NextPage = () => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-between">
               <div className="flex items-center">
-                <h1 className="text-2xl font-bold text-gray-900">Task Manager</h1>
+                <Link href="/" className="text-2xl font-bold text-gray-900 hover:text-blue-600">
+                  Task Manager
+                </Link>
               </div>
               <div className="flex items-center gap-4">
                 <Link href="/profile" className="text-gray-600 hover:text-gray-900">
