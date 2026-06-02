@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./auth";
+import { authOptions } from "../auth";
 
 export async function createTRPCContext(opts: {
   req?: NextApiRequest;

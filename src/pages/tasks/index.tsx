@@ -20,6 +20,7 @@ const TasksPage: NextPage = () => {
   });
 
   const createTaskMutation = trpc.task.create.useMutation();
+  const utils = trpc.useUtils();
 
   const handleCreateTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +34,10 @@ const TasksPage: NextPage = () => {
         priority: formData.get("priority") as any,
         dueDate: formData.get("dueDate") ? new Date(formData.get("dueDate") as string) : undefined,
       });
-      e.currentTarget.reset();
+      if (e.currentTarget) {
+        e.currentTarget.reset();
+      }
+      await utils.task.getAll.invalidate();
     } catch (error) {
       console.error("Failed to create task:", error);
     }
@@ -41,7 +45,7 @@ const TasksPage: NextPage = () => {
 
   if (status === "loading") return <div>Loading...</div>;
   if (!session) {
-    void router.push("/api/auth/signin");
+    void router.push("/auth/signin");
     return null;
   }
 

@@ -23,7 +23,9 @@ const ProjectsPage: NextPage = () => {
         name: formData.get("name") as string,
         description: formData.get("description") as string,
       });
-      e.currentTarget.reset();
+      if (e.currentTarget) {
+        e.currentTarget.reset();
+      }
     } catch (error) {
       console.error("Failed to create project:", error);
     }
@@ -31,7 +33,7 @@ const ProjectsPage: NextPage = () => {
 
   if (status === "loading") return <div>Loading...</div>;
   if (!session) {
-    void router.push("/api/auth/signin");
+    void router.push("/auth/signin");
     return null;
   }
 
@@ -42,6 +44,9 @@ const ProjectsPage: NextPage = () => {
       </Head>
       <div className="min-h-screen bg-gray-100">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <Link href="/dashboard" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
+            ← Back to Dashboard
+          </Link>
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
             <p className="mt-2 text-gray-600">Manage your projects and team members</p>

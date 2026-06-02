@@ -30,7 +30,7 @@ export const taskRouter = router({
         description: z.string().optional(),
         projectId: z.string(),
         priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional(),
-        dueDate: z.date().optional(),
+        dueDate: z.string().pipe(z.coerce.date()).optional(),
         assigneeId: z.string().optional(),
         tags: z.array(z.string()).optional(),
       })

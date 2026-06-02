@@ -16,7 +16,7 @@ const ProjectDetailPage: NextPage = () => {
 
   if (status === "loading" || isLoading) return <div>Loading...</div>;
   if (!session) {
-    void router.push("/api/auth/signin");
+    void router.push("/auth/signin");
     return null;
   }
 
@@ -33,10 +33,15 @@ const ProjectDetailPage: NextPage = () => {
       </Head>
       <div className="min-h-screen bg-gray-100">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {/* Back Button */}
-          <Link href="/projects" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
-            ← Back to Projects
-          </Link>
+          {/* Navigation Links */}
+          <div className="mb-4 flex gap-4">
+            <Link href="/dashboard" className="text-blue-600 hover:text-blue-800 inline-block">
+              ← Dashboard
+            </Link>
+            <Link href="/projects" className="text-blue-600 hover:text-blue-800 inline-block">
+              ← Projects
+            </Link>
+          </div>
 
           {/* Project Header */}
           <div className="mb-8 rounded-lg bg-white p-6 shadow">

@@ -17,7 +17,7 @@ const DashboardPage: NextPage = () => {
 
   if (status === "loading") return <div>Loading...</div>;
   if (!session) {
-    void router.push("/api/auth/signin");
+    void router.push("/auth/signin");
     return null;
   }
 

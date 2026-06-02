@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -16,12 +16,12 @@ model Account {
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
+  refresh_token      String?
+  access_token       String?
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String?  @db.Text
+  id_token           String?
   session_state      String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -83,7 +83,7 @@ model VerificationToken {
 model Project {
   id            String       @id @default(cuid())
   name          String
-  description   String?      @db.Text
+  description   String?
   creatorId     String
   creator       User         @relation("creator", fields: [creatorId], references: [id], onDelete: Cascade)
   
@@ -118,7 +118,7 @@ model ProjectMember {
 model Task {
   id            String       @id @default(cuid())
   title         String
-  description   String?      @db.Text
+  description   String?
   
   projectId     String
   project       Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -130,8 +130,8 @@ model Task {
   assignee      User?        @relation("assignee", fields: [assigneeId], references: [id])
   
   // Task properties
-  status        TaskStatus   @default(TODO)
-  priority      Priority     @default(MEDIUM)
+  status        String   @default("TODO")
+  priority      String   @default("MEDIUM")
   dueDate       DateTime?
   
   // Tags and metadata
@@ -155,17 +155,5 @@ model Tag {
   createdAt DateTime @default(now())
 }
 
-enum TaskStatus {
-  TODO
-  IN_PROGRESS
-  IN_REVIEW
-  DONE
-  ARCHIVED
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
-}
+// TaskStatus: TODO, IN_PROGRESS, IN_REVIEW, DONE, ARCHIVED
+// Priority: LOW, MEDIUM, HIGH, URGENT
