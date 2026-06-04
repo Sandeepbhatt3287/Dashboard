@@ -88,6 +88,8 @@ npm run dev
 
 The application will be available at [http://localhost:3000](http://localhost:3000)
 
+[https://dashboard-sandeep-s-projects27.vercel.app/](https://dashboard-sandeep-s-projects27.vercel.app/)
+
 ## Demo Credentials
 
 - **Email**: demo@example.com
